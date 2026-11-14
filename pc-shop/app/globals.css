@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/*
+  APEX — cửa hàng linh kiện kiểu chuẩn ngành, nền tối.
+  Một thang trung tính 11 bậc (graphite lạnh), một màu nhấn xanh dương, ba màu trạng thái
+  (đỏ = lỗi, hổ phách = cảnh báo, xanh lá = đạt). Chỉ có chế độ tối (người dùng chọn).
+*/
+@theme {
+  --color-n-0: #0b0d11;
+  --color-n-1: #101319;
+  --color-n-2: #151922;
+  --color-n-3: #1b202b;
+  --color-n-4: #252b38;
+  --color-n-5: #343c4d;
+  --color-n-6: #4b5468;
+  --color-n-7: #6e788e;
+  --color-n-8: #949db1;
+  --color-n-9: #c5cad7;
+  --color-n-10: #eef0f5;
+
+  /* nhan: nền nút/huy hiệu (chữ trắng đạt 4.5:1); nhan-sang: chữ/liên kết trên nền tối */
+  --color-nhan: #2f6fed;
+  --color-nhan-dam: #2259cc;
+  --color-nhan-sang: #7eaaff;
+  --color-nhan-nen: #142344;
+
+  --color-loi: #ff6461;
+  --color-loi-nen: #2d1517;
+  --color-canh-bao: #f4a62a;
+  --color-canh-bao-nen: #2b2010;
+  --color-dat: #45d390;
+  --color-dat-nen: #102619;
+
+  --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Thang cỡ chữ (xem DESIGN.md): "co" = cỡ */
+  --text-co-nhan: 11px;
+  --text-co-phu: 12px;
+  --text-co-nho: 13px;
+  --text-co-than: 14px;
+  --text-co-doc: 15px;
+  --text-co-noi: 16px;
+  --text-co-muc: 17px;
+  --text-co-phan: 19px;
+  --text-co-gia: 24px;
+  --text-co-tieu-de: 26px;
+  --text-co-tieu-de-lon: 30px;
+  --text-co-hien-thi: 38px;
+
+  --radius-tem: 8px;
+
+  --ease-ra: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-vao-ra: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-dong-dau: dong-dau 260ms var(--ease-ra) both;
+  --animate-hien: hien 220ms var(--ease-ra) both;
+  --animate-truot-vao: truot-vao 320ms var(--ease-ra) both;
+  --animate-nay: nay 380ms var(--ease-ra);
+}
+
+@keyframes dong-dau {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes hien {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes truot-vao {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes nay {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.22);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    accent-color: var(--color-nhan);
+    caret-color: var(--color-nhan);
+  }
+
+  html {
+    background: var(--color-n-0);
+    color: var(--color-n-10);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01" on;
+    background: var(--color-n-0);
+  }
+
+  ::selection {
+    background: var(--color-nhan);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-nhan-sang);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  * {
+    scrollbar-color: var(--color-n-5) transparent;
+    scrollbar-width: thin;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Số trong bảng thông số luôn thẳng cột */
+  .so {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums slashed-zero;
+    letter-spacing: -0.01em;
+  }
+
+  /* Bề mặt thẻ: sáng hơn nền một bậc, viền mảnh */
+  .tem {
+    background: var(--color-n-2);
+    border: 1px solid var(--color-n-4);
+    border-radius: var(--radius-tem);
+  }
+
+  /* Nhãn trạng thái tương thích: chip có nền nhạt cùng màu */
+  .dau {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem 0.1rem 0.45rem;
+    font-size: var(--text-co-phu);
+    font-weight: 600;
+    line-height: 1.45;
+    white-space: nowrap;
+    background: color-mix(in oklab, currentColor 14%, transparent);
+  }
+
+  /* Nhãn cột: chữ hoa nhỏ, đậm */
+  .nhan-cot {
+    font-size: var(--text-co-nhan);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-n-8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
